@@ -1,9 +1,20 @@
+const { response } = require('..');
+
 const express = require('express').Router();
 const mysql = require('../mysql').pool;
 
 express.get('/', (req, res, next) => {
-    res.status(200).send({
-        mensagem: 'Retorna Todos os produtos'
+    mysql.getConnection((error, conn) => {
+        if (error) { return res.status(500).send({ error: error }) }
+        conn.query(
+            'SELECT *FROM PRODUTO WHERE NOME = "?";',
+           // [req.body.nome],
+            (error, resultado, fields) => {
+                if (error) { return res.status(500).send({ error: error }) }
+                return res.status(200).send({ response: resultado })
+            }
+        )
+
     })
 });
 
@@ -12,7 +23,7 @@ express.post('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { console.error(error); res.status(500).send({ error: error }) }
         conn.query(
-            'INSERT INTO PRODUTO(NOME) VALUES(?)',
+            'INSERT INTO PRODUTO(NOME) VALUES(?);',
             [
                 req.body.nome
             ],
