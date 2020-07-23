@@ -7,8 +7,8 @@ express.get('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
         conn.query(
-            'SELECT * FROM produto;',
-           // [req.body.nome],
+            'SELECT * FROM produto where nome = "(?)";',
+            [req.body.nome],
             (error, resultado, fields) => {
                 if (error) { return res.status(500).send({ error: error }) }
                 return res.status(200).send({ response: resultado })
