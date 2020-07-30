@@ -3,10 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const rotaProduto = require('./routes/produto');
-//const rotaPrecificacao = require('./routes/precificacao');
-//const rotaCategoria = require('./routes/categoria');
-//const rotaestoqueProduto = require('./routes/estoque');
-//const rotaInformacoes = require('./routes/informacoesproduto');
+const rotaCategoria = require('./routes/categoria');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -26,10 +23,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/produto', rotaProduto);
-//app.use('/precificacao', rotaPrecificacao);
-//app.use('/categoria', rotaCategoria);
-//app.use('/estoque', rotaestoqueProduto);
-//app.use('/rotaInformacoes', rotaInformacoes);
+app.use('/categoria', rotaCategoria);
 
 
 module.exports = app;
